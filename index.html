@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Poson Poya - 3D Koodu</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Load Three.js, OrbitControls, and lil-gui via CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lil-gui@0.18"></script>
+</head>
+<body>
+    <!-- 3D Canvas Container -->
+    <div id="canvas-container"></div>
+    
+    <!-- UI Overlay -->
+    <div class="ui-overlay">
+        <!-- Greeting Card -->
+        <div class="greeting-card">
+            <h1>Happy Poson Poyaday 2026</h1>
+            <p>Drag to rotate. Scroll to zoom.<br>May the light of the Dhamma illuminate your path to peace.</p>
+            <div class="glow-line"></div>
+            <button class="share-btn" onclick="alert('Ready to share the light!')">Share the Blessing</button>
+        </div>
+    </div>
+
+    <!-- Hidden file inputs for GUI image uploads -->
+    <input type="file" id="uploadTop" accept="image/*" style="display: none;">
+    <input type="file" id="uploadMid1" accept="image/*" style="display: none;">
+    <input type="file" id="uploadMid2" accept="image/*" style="display: none;">
+    <input type="file" id="uploadBase" accept="image/*" style="display: none;">
+
+    <!-- Local texture data to bypass CORS for local file viewing -->
+    <script src="js/textureData.js"></script>
+    <script src="js/buddhaData.js"></script>
+    <script src="js/chakraData.js"></script>
+    <script src="js/clayData.js"></script>
+    <!-- Main Logic -->
+    <script src="js/script.js"></script>
+</body>
+</html>
