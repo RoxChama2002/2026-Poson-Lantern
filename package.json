@@ -1,0 +1,8 @@
+{
+  "name": "2026-poson-lantern",
+  "version": "1.0.0",
+  "description": "3D Poson Lantern",
+  "dependencies": {
+    "@vercel/kv": "^1.0.1"
+  }
+}

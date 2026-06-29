@@ -638,30 +638,50 @@ settingsFolder.add(params, 'restoreDefaults').name('Restore Defaults');
 
 // 8. Animation Loop
 const clock = new THREE.Clock();
-// Like Button Logic
+// Like Button Logic (Global Counter via Vercel KV)
 const likeBtn = document.getElementById('like-btn');
 const likeCountEl = document.getElementById('like-count');
 const heartIcon = document.querySelector('.heart-icon');
 
-// Initialize with a fake starting count (e.g. 108 for the auspicious Buddhist number)
-let likeCount = parseInt(localStorage.getItem('lanternLikes')) || 108;
 let hasLiked = localStorage.getItem('lanternHasLiked') === 'true';
 
-likeCountEl.textContent = likeCount;
+// Set initial UI state based on local storage
 if (hasLiked) {
     likeBtn.classList.add('liked');
     heartIcon.textContent = '❤️';
 }
 
+// Fetch the real global like count on load
+fetch('/api/like')
+    .then(res => res.json())
+    .then(data => {
+        if (data.likes) {
+            likeCountEl.textContent = data.likes;
+        }
+    })
+    .catch(err => console.error("Error fetching likes:", err));
+
 likeBtn.addEventListener('click', () => {
     if (!hasLiked) {
-        likeCount++;
+        // Optimistic UI Update
+        const currentCount = parseInt(likeCountEl.textContent) || 108;
+        likeCountEl.textContent = currentCount + 1;
+        
         hasLiked = true;
         likeBtn.classList.add('liked');
         heartIcon.textContent = '❤️';
         localStorage.setItem('lanternHasLiked', 'true');
-        localStorage.setItem('lanternLikes', likeCount.toString());
-        likeCountEl.textContent = likeCount;
+        
+        // Tell the server to increment the global count
+        fetch('/api/like', { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+                if (data.likes) {
+                    // Sync with true server count
+                    likeCountEl.textContent = data.likes;
+                }
+            })
+            .catch(err => console.error("Error updating likes:", err));
     }
 });
 
