@@ -652,12 +652,11 @@ if (hasLiked) {
 }
 
 // Fetch the real global like count on load
-fetch('https://countapi.mileshilliard.com/api/v1/get/poson2026-lantern-likes')
+fetch('https://countapi.mileshilliard.com/api/v1/get/poson2026-lantern-likes-v2')
     .then(res => res.json())
     .then(data => {
         if (data.value !== undefined) {
-            // We add 107 so the baseline starts at the auspicious 108
-            likeCountEl.textContent = data.value + 107;
+            likeCountEl.textContent = data.value;
         }
     })
     .catch(err => console.error("Error fetching likes:", err));
@@ -665,7 +664,7 @@ fetch('https://countapi.mileshilliard.com/api/v1/get/poson2026-lantern-likes')
 likeBtn.addEventListener('click', () => {
     if (!hasLiked) {
         // Optimistic UI Update
-        const currentCount = parseInt(likeCountEl.textContent) || 108;
+        const currentCount = parseInt(likeCountEl.textContent) || 0;
         likeCountEl.textContent = currentCount + 1;
         
         hasLiked = true;
@@ -674,12 +673,12 @@ likeBtn.addEventListener('click', () => {
         localStorage.setItem('lanternHasLiked', 'true');
         
         // Tell the server to increment the global count
-        fetch('https://countapi.mileshilliard.com/api/v1/hit/poson2026-lantern-likes')
+        fetch('https://countapi.mileshilliard.com/api/v1/hit/poson2026-lantern-likes-v2')
             .then(res => res.json())
             .then(data => {
                 if (data.value !== undefined) {
                     // Sync with true server count
-                    likeCountEl.textContent = data.value + 107;
+                    likeCountEl.textContent = data.value;
                 }
             })
             .catch(err => console.error("Error updating likes:", err));
