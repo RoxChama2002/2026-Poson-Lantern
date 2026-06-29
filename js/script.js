@@ -550,6 +550,21 @@ ambientLight.intensity = params.ambientLightIntensity;
 
 const gui = new lil.GUI({ title: 'Lantern Customization' });
 
+// Hide GUI by default
+gui.hide();
+
+// Add close button to the GUI
+gui.add({ close: () => {
+    gui.hide();
+    document.getElementById('customize-btn').style.display = 'block';
+}}, 'close').name('✖ Close Panel');
+
+// Handle Customize button click
+document.getElementById('customize-btn').addEventListener('click', (e) => {
+    gui.show();
+    e.target.style.display = 'none';
+});
+
 // Structural Parameters
 const structureFolder = gui.addFolder('Size & Structure');
 structureFolder.add(params, 'topWidth', 0.5, 2.0).name('Top Width').onChange(v => {
@@ -623,6 +638,11 @@ settingsFolder.add(params, 'restoreDefaults').name('Restore Defaults');
 
 // 8. Animation Loop
 const clock = new THREE.Clock();
+let shareGlowStartTime = -1;
+
+document.getElementById('share-btn').addEventListener('click', () => {
+    shareGlowStartTime = clock.getElapsedTime();
+});
 
 function animate() {
     requestAnimationFrame(animate);
@@ -648,6 +668,27 @@ function animate() {
         // Smooth bobbing motion
         lotus.userData.orb.position.y = 4.5 + Math.sin(time * 2) * 0.5;
         lotus.userData.orbLight.position.y = lotus.userData.orb.position.y;
+        
+        // Share Blessing Glow Effect
+        if (shareGlowStartTime > 0) {
+            const t = time - shareGlowStartTime;
+            if (t < 4) {
+                // Creates a burst that peaks quickly and fades smoothly
+                const burst = t * Math.exp(-t * 2) * 50; 
+                lotus.userData.orb.material.emissiveIntensity = 2.5 + burst;
+                lotus.userData.orbLight.intensity = 3 + burst * 1.5;
+                if (lotus.userData.dust) {
+                    lotus.userData.dust.material.size = 0.2 + (burst * 0.02);
+                }
+            } else {
+                shareGlowStartTime = -1;
+                lotus.userData.orb.material.emissiveIntensity = 2.5;
+                lotus.userData.orbLight.intensity = 3;
+                if (lotus.userData.dust) {
+                    lotus.userData.dust.material.size = 0.2;
+                }
+            }
+        }
     }
     
     if (lotus.userData.dust) {

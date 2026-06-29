@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Happy Poson Poya - 3D Koodu</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,13 +19,14 @@
     <div id="canvas-container"></div>
     
     <!-- UI Overlay -->
+    <button id="customize-btn" class="customize-btn">Customize</button>
     <div class="ui-overlay">
         <!-- Greeting Card -->
         <div class="greeting-card">
             <h1>Happy Poson Poyaday 2026</h1>
             <p>Drag to rotate. Scroll to zoom.<br>May the light of the Dhamma illuminate your path to peace.</p>
             <div class="glow-line"></div>
-            <button class="share-btn" onclick="alert('Ready to share the light!')">Share the Blessing</button>
+            <button id="share-btn" class="share-btn">Share the Blessing</button>
         </div>
     </div>
 
