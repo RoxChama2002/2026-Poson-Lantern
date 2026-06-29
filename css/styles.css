@@ -186,6 +186,34 @@ p {
     transform: translateY(-2px);
 }
 
+.reopen-btn {
+    top: 70px;
+    padding: 0.6rem;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.close-card-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-card-btn:hover {
+    color: white;
+}
+
 /* Mobile Responsive Adjustments */
 @media (max-width: 767px) {
     .greeting-card {
@@ -208,6 +236,13 @@ p {
         right: 10px;
         padding: 0.5rem 1rem;
         font-size: 0.9rem;
+    }
+    
+    .reopen-btn {
+        top: 55px;
+        width: 38px;
+        height: 38px;
+        padding: 0;
     }
     
     /* Ensure the lil-gui panel is scrollable on small screens */

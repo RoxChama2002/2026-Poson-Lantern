@@ -685,6 +685,28 @@ likeBtn.addEventListener('click', () => {
     }
 });
 
+// Greeting Card Popup Logic
+const uiOverlay = document.getElementById('ui-overlay');
+const closeCardBtn = document.getElementById('close-card-btn');
+const reopenCardBtn = document.getElementById('reopen-card-btn');
+
+// Show the card after 5 seconds of watching
+setTimeout(() => {
+    if (uiOverlay.style.display === 'none') {
+        uiOverlay.style.display = 'flex';
+    }
+}, 5000);
+
+closeCardBtn.addEventListener('click', () => {
+    uiOverlay.style.display = 'none';
+    reopenCardBtn.style.display = 'flex';
+});
+
+reopenCardBtn.addEventListener('click', () => {
+    uiOverlay.style.display = 'flex';
+    reopenCardBtn.style.display = 'none';
+});
+
 let shareGlowStartTime = -1;
 
 document.getElementById('share-btn').addEventListener('click', () => {
