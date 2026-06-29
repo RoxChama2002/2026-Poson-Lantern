@@ -638,6 +638,33 @@ settingsFolder.add(params, 'restoreDefaults').name('Restore Defaults');
 
 // 8. Animation Loop
 const clock = new THREE.Clock();
+// Like Button Logic
+const likeBtn = document.getElementById('like-btn');
+const likeCountEl = document.getElementById('like-count');
+const heartIcon = document.querySelector('.heart-icon');
+
+// Initialize with a fake starting count (e.g. 108 for the auspicious Buddhist number)
+let likeCount = parseInt(localStorage.getItem('lanternLikes')) || 108;
+let hasLiked = localStorage.getItem('lanternHasLiked') === 'true';
+
+likeCountEl.textContent = likeCount;
+if (hasLiked) {
+    likeBtn.classList.add('liked');
+    heartIcon.textContent = '❤️';
+}
+
+likeBtn.addEventListener('click', () => {
+    if (!hasLiked) {
+        likeCount++;
+        hasLiked = true;
+        likeBtn.classList.add('liked');
+        heartIcon.textContent = '❤️';
+        localStorage.setItem('lanternHasLiked', 'true');
+        localStorage.setItem('lanternLikes', likeCount.toString());
+        likeCountEl.textContent = likeCount;
+    }
+});
+
 let shareGlowStartTime = -1;
 
 document.getElementById('share-btn').addEventListener('click', () => {
