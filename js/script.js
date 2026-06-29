@@ -638,7 +638,7 @@ settingsFolder.add(params, 'restoreDefaults').name('Restore Defaults');
 
 // 8. Animation Loop
 const clock = new THREE.Clock();
-// Like Button Logic (Global Counter via Vercel KV)
+// Like Button Logic (Global Counter via Free API)
 const likeBtn = document.getElementById('like-btn');
 const likeCountEl = document.getElementById('like-count');
 const heartIcon = document.querySelector('.heart-icon');
@@ -652,11 +652,12 @@ if (hasLiked) {
 }
 
 // Fetch the real global like count on load
-fetch('/api/like')
+fetch('https://countapi.mileshilliard.com/api/v1/get/poson2026-lantern-likes')
     .then(res => res.json())
     .then(data => {
-        if (data.likes) {
-            likeCountEl.textContent = data.likes;
+        if (data.value !== undefined) {
+            // We add 107 so the baseline starts at the auspicious 108
+            likeCountEl.textContent = data.value + 107;
         }
     })
     .catch(err => console.error("Error fetching likes:", err));
@@ -673,12 +674,12 @@ likeBtn.addEventListener('click', () => {
         localStorage.setItem('lanternHasLiked', 'true');
         
         // Tell the server to increment the global count
-        fetch('/api/like', { method: 'POST' })
+        fetch('https://countapi.mileshilliard.com/api/v1/hit/poson2026-lantern-likes')
             .then(res => res.json())
             .then(data => {
-                if (data.likes) {
+                if (data.value !== undefined) {
                     // Sync with true server count
-                    likeCountEl.textContent = data.likes;
+                    likeCountEl.textContent = data.value + 107;
                 }
             })
             .catch(err => console.error("Error updating likes:", err));
